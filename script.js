@@ -1,3 +1,12 @@
+const paperBtn = document.getElementById('paperBtn');
+const rockBtn = document.getElementById('rockBtn');
+const scissorsBtn = document.getElementById('scissorsBtn');
+const result = document.getElementById('result');
+
+paperBtn.addEventListener('click', () => playRound('paper', getComputerChoice()));
+rockBtn.addEventListener('click', () => playRound('rock', getComputerChoice()));
+scissorsBtn.addEventListener('click', () => playRound('scissors', getComputerChoice()));
+
 var humanScore = 0;
 var computerScore = 0;
 
@@ -14,46 +23,29 @@ function getComputerChoice(){
     }
 }
 
-function getHumanChoice(){
-    const humanChoice = prompt("Please enter your hand");
-    const normalizedChoice = humanChoice.toLowerCase();
-    if (humanChoice === 'rock' || humanChoice === 'paper' || humanChoice === 'scissors'){
-        return humanChoice;
-    }
-}
+
 
 function playRound(human, computer){
     if (human === computer){
         console.log("It's a tie!");
+        playGame("It's a tie!");
     } else if (human === 'rock' && computer === 'scissors' || human === 'paper' && computer === 'rock' || human === 'scissors' && computer === 'paper'){
         console.log("You win!");
         humanScore++;
+        playGame("You win!");
     } else {
         console.log("You lose!");
         computerScore++;
+        playGame("You lose!");
     }
 }
 
-
-function playGame(){
-
-
-    for (let i=0; i < 5; i++){
-        const humanChoice = getHumanChoice();
-        const computerChoice = getComputerChoice();
-
-        playRound(humanChoice, computerChoice);
-    }
-
-    console.log(`Human score: ${humanScore} Computer score: ${computerScore}`);
-
-    if (humanScore > computerScore){
-        alert("Human wins!");
-    } else if (humanScore < computerScore){
-        alert("Computer wins!");
+function playGame(prompt = ""){
+    if (humanScore === 5){
+        result.innerText = "Human wins!";
+    } else if (computerScore === 5){
+        result.innerText = "Computer wins!";
     } else{
-        alert("It's a tie!");
+        result.innerText = `${prompt} - Current Score : Human ${humanScore} - Computer ${computerScore}`;
     }
 }
-
-playGame();
